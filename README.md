@@ -30,7 +30,7 @@ The Playlist Generator App is a web application that enables users to create AI-
 - **Deployment:** Gitlab
 
 ## 🌐 Live Demo
-Explore the live demonstration of the project: [Carepulse_On_Vercel](https://careplus-blush.vercel.app/)
+Explore the live demonstration of the project: [Spotify AI_On_Vercel](https://gridiron-test-5lb5.vercel.app/)
 
 ## Notes For Users
 - **Data Loss Warning:** Clicking the "Back" button clears the current playlist and resets the app. Ensure you save your playlist before proceeding.
@@ -103,7 +103,7 @@ The documentation includes:
 4. Use the "Back" button to clear the playlist and select a new genre.
 
 ## Hosted Usage
-1. The front-end of the application is hosted on Vercel and accessible [Spotify AI](https://careplus-blush.vercel.app/)..
+1. The front-end of the application is hosted on Vercel and accessible [Spotify AI](https://gridiron-test-5lb5.vercel.app/)..
 2. The back-end is also hosted on Render and is configured to only accept requests from the hosted front-end ip address.
 
 
