@@ -1,11 +1,10 @@
 <template>
-  <div class="min-h-screen bg-[#0E1B2B] text-white flex flex-col items-center">
-    <!-- Navbar -->
+  <div class="min-h-screen bg-[#0E1B2B] text-white flex flex-col items-center relative">
+    <!-- Navbar with GitHub link -->
     <header class="w-full flex justify-between items-center px-6 py-4 border-b border-gray-600">
       <div class="flex items-center space-x-2">
-        <!-- GitHub Link -->
         <a
-          href="https://github.com/your-repo-url" 
+          href="https://github.com/samorobo/gridiron-test"
           target="_blank"
           rel="noopener noreferrer"
           class="font-semibold text-lg text-blue-400 hover:underline"
@@ -13,14 +12,12 @@
           GitHub
         </a>
       </div>
-      <button class="flex items-center space-x-2 font-semibold">
-        Logout
-      </button>
     </header>
 
+    <!-- Main Content -->
     <main class="flex flex-col items-center mt-12 px-4 w-full">
       <!-- Title -->
-      <h1 class="text-4xl font-bold mb-8 flex items-center space-x-2">
+      <h1 class="text-4xl font-bold mb-4 flex items-center space-x-2">
         <span>Spotify AI</span>
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"
@@ -29,56 +26,133 @@
         />
       </h1>
 
-      <!-- Select and Button -->
-      <div class="flex items-center space-x-4 mb-6">
+      <!-- Label above row -->
+      <p class="font-medium mb-2">Pick a genre</p>
+      <!-- Genre Dropdown and Generate Button on the same line -->
+      <div class="mb-8 flex items-end space-x-4">
         <select
-          class="px-4 py-2 border rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
           v-model="genre"
+          class="bg-gray-700 text-white py-3 px-4 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
         >
-          <option value="">Select Genre</option>
+          <option value="" disabled>Select Genre</option>
           <option value="Pop">Pop</option>
-          <option value="Jazz">Jazz</option>
           <option value="Rock">Rock</option>
+          <option value="Jazz">Jazz</option>
+          <option value="Country">Country</option>
+          <option value="Blues">Blues</option>
           <option value="Afrobeats">Afrobeats</option>
-          <option value="Amapiano">Amapiano</option>
-          <option value="Raggae">Raggae</option>
           <option value="Hip-hop">Hip-hop</option>
+          <option value="Highlife">Highlife</option>
+          <option value="Opera">Opera</option>
+          <option value="Rnb">R&amp;B</option>
         </select>
+
         <button
-          class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700"
           @click="generatePlaylist"
+          class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 transition flex items-center justify-center whitespace-nowrap"
           :disabled="loading"
         >
+          <span v-if="loading" class="mr-2">
+            <span class="inline-block h-4 w-4 border-2 border-t-white border-l-white border-b-transparent border-r-transparent rounded-full animate-spin"></span>
+          </span>
           {{ loading ? "Generating..." : "Generate Playlist" }}
         </button>
       </div>
 
       <p v-if="error" class="text-red-500 text-sm mb-4">{{ error }}</p>
 
-      <!-- Loading Spinner -->
-      <div v-if="loading" class="flex justify-center items-center mt-6">
-        <div class="w-12 h-12 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
-      </div>
-
-      <!-- Playlist -->
-      <div v-if="playlist.length > 0 && !loading" class="flex justify-center mt-6">
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
-          <li
-            v-for="(song, index) in playlist"
-            :key="index"
-            class="bg-white text-[#0E1B2B] px-4 py-2 rounded-md shadow-md"
-          >
-            <strong>{{ song.title }}</strong> by {{ song.artist }}
-          </li>
-        </ul>
+      <!-- Converted Image Section (shifted further left) -->
+      <div class="mb-12 w-full flex justify-start md:mb-16 lg:w-3/3 ">
+        <div class="relative left-12 top-12 z-10 -ml-12 overflow-hidden rounded-lg bg-gray-100 shadow-lg md:left-16 md:top-16 lg:ml-0">
+          <img 
+            :src="manListen"
+            alt="Man Listening"
+            class="h-full w-full object-cover object-center"
+            width="500"
+            height="500"
+          />
+        </div>
+        <div class="overflow-hidden rounded-lg bg-gray-100 shadow-lg">
+          <img
+            :src="womanListen"
+            alt="Woman Listening"
+            class="h-full w-full object-cover object-center"
+            width="500"
+            height="500"
+          />
+        </div>
       </div>
     </main>
+
+    <!-- Playlist Modal: Only visible when a playlist exists -->
+    <div v-if="playlist.length > 0" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-40">
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full relative">
+        <!-- Back Button in Top Right Corner -->
+        <button
+          @click="showConfirmModal = true"
+          class="absolute top-2 right-2 flex items-center space-x-1 text-gray-700 hover:text-gray-900"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <div class="p-6 pt-12">
+          <!-- Screenshot Instruction Text -->
+          <!-- <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">
+            Take a screenshot and share with your friends
+          </h2> -->
+          <!-- Playlist Songs -->
+          <div class="space-y-4">
+            <div v-for="(song, index) in playlist" :key="index" class="flex items-start">
+              <div class="text-xl font-bold text-gray-800 mr-4">{{ index + 1 }}.</div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800">{{ song.title }}</h3>
+                <p class="text-gray-500">{{ song.artist }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal (Appears on Back Button Click) -->
+    <div v-if="showConfirmModal" class="fixed inset-0 z-50 flex items-center justify-center">
+      <div class="absolute inset-0 bg-black bg-opacity-50" @click="showConfirmModal = false"></div>
+      <div class="relative bg-white rounded-lg p-6 max-w-sm mx-auto">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">
+          Are you sure you want to  exit? You will lose your playlist suggestions if you don't take a screenshot.
+        </h3>
+        <div class="flex justify-end space-x-4 mt-6">
+          <button
+            @click="showConfirmModal = false"
+            class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
+          >
+            Continue
+          </button>
+          <button
+            @click="resetPlaylist"
+            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Spinner in Main View (only if not showing the playlist modal) -->
+    <div v-if="loading && playlist.length === 0" class="fixed inset-0 flex items-center justify-center z-30">
+      <div class="w-12 h-12 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
+import manListen from '@/assets/images/man-listen.jpg';
+import womanListen from '@/assets/images/woman-listen.jpg';
 
 export default {
   name: 'App',
@@ -87,6 +161,7 @@ export default {
     const playlist = ref([]);
     const loading = ref(false);
     const error = ref('');
+    const showConfirmModal = ref(false);
 
     const generatePlaylist = async () => {
       if (!genre.value) {
@@ -96,10 +171,10 @@ export default {
 
       loading.value = true;
       error.value = '';
-      playlist.value = []; // Clear playlist during loading
+      playlist.value = []; // Clear previous playlist during loading
+
       try {
         const response = await axios.get(
-          //`https://backend-ne7e.onrender.com/api/playlist/${genre.value}`
           `http://localhost:5000/api/playlist/${genre.value}`
         );
         playlist.value = response.data.playlist;
@@ -110,12 +185,23 @@ export default {
       }
     };
 
+    const resetPlaylist = () => {
+      showConfirmModal.value = false;
+      loading.value = false;
+      playlist.value = [];
+      genre.value = '';
+    };
+
     return {
       genre,
       playlist,
       loading,
       error,
       generatePlaylist,
+      showConfirmModal,
+      resetPlaylist,
+      manListen,
+      womanListen,
     };
   },
 };
