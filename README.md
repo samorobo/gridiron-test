@@ -18,10 +18,10 @@ The Playlist Generator App is a web application that enables users to create AI-
 ![spotify-3](https://github.com/user-attachments/assets/58c8d1fe-ad3c-423d-936f-b20a9d56fee7)
 
 ### 3. Generated Playlist
-![spotify-4](https://github.com/user-attachments/assets/39856cd5-986c-4834-8219-7bc9a359e951)
+![spotify-7](https://github.com/user-attachments/assets/058ce2c3-caea-4b2a-ba36-61cfa1ec48ef)
 
 ### 4. Confirmation modal for exit with warning
-![spotify-5](https://github.com/user-attachments/assets/cc121da7-f57d-4755-915f-61cbbe4e2b89)
+![spotify-8](https://github.com/user-attachments/assets/8cb76998-3de1-4942-84b7-474c0b014f2b)
 
 ## Technologies Used
 - **Front-end:** Vue.js, TailwindCSS
@@ -118,7 +118,19 @@ CORS(app, origins=["https://your-frontend.vercel.app"], methods=["GET"], allow_h
 ```
 By limiting access to your specific frontend, you improve the security of your API and prevent unauthorized requests from other domains.
 
-
+## Starting the backend server with Bash Script to display logs
+- **Navigating to the server directory**
+```
+cd server
+```  
+- **making the start_server.sh executable**
+```
+chmod +x start_server.sh
+```
+- **starting the backend server**
+```
+./start_server.sh
+```
 ## Usage
 ### Local Usage
 1. Follow the installation instructions to set up the application locally.
