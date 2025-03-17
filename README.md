@@ -87,13 +87,37 @@ python app.py
 ### 8. Access the app at http://localhost:3000
 
 
-## Postman Documentation
+## API Documentation
+### Endpoint: Generate Playlist
+- **URL:** `/api/playlist/<genre>`
+- **Method:** GET
+- **URL Parameter:**
+  - genre (string): The music genre for which you want to generate a playlist (e.g., Pop, Rock, Jazz).
+### Example Request
+```
+GET http://127.0.0.1:5000/api/playlist/Jazz
+```
+### Successful Response
+- **Status Code:** ````200 OK````
+- **Response Body:**
+  
+  ![postman-pics](https://github.com/user-attachments/assets/7f7777c6-0440-4a82-af57-fbb733dcf956)
+  
 
-To explore the API endpoints for the Playlist Generator App, visit the detailed [postman documentation](https://careplus-blush.vercel.app/).
+## CORS Configuration
+During development, the API is configured to allow all routes access using the following setting:
+```
+CORS(app, origins=["*"], methods=["GET"], allow_headers=["Content-Type"])
+```
+This configuration permits any origin to access your API's GET endpoints, which is useful for testing across various environments and during development.
 
-The documentation includes:
+## Important note for production
+When moving to production, i highly recommended to restrict access to your API. For example, you can update the configuration to only allow requests from your trusted frontend URL. An updated configuration might look like this:
+```
+CORS(app, origins=["https://your-frontend.vercel.app"], methods=["GET"], allow_headers=["Content-Type"])
+```
+By limiting access to your specific frontend, you improve the security of your API and prevent unauthorized requests from other domains.
 
-**Endpoint Descriptions:** Detailed information about each endpoint, including request methods, parameters, and response structures.
 
 ## Usage
 ### Local Usage
