@@ -61,8 +61,9 @@
 
       <p v-if="error" class="text-red-500 text-sm mb-4">{{ error }}</p>
 
-      <!-- Converted Image Section (shifted further left) -->
-      <div class="mb-12 w-full flex justify-start md:mb-16 lg:w-3/3 ">
+      <!-- Converted Image Section -->
+      <!-- Hidden on mobile and tablet; visible on large screens only -->
+      <div class="mb-12 w-full hidden lg:flex justify-start md:mb-16 lg:w-3/3">
         <div class="relative left-12 top-12 z-10 -ml-12 overflow-hidden rounded-lg bg-gray-100 shadow-lg md:left-16 md:top-16 lg:ml-0">
           <img 
             :src="manListen"
@@ -86,28 +87,27 @@
 
     <!-- Playlist Modal: Only visible when a playlist exists -->
     <div v-if="playlist.length > 0" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-40">
-      <div class="bg-white rounded-lg shadow-xl max-w-md w-full relative">
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full h-[600px] max-h-[80vh] relative flex flex-col">
+        
         <!-- Back Button in Top Right Corner -->
         <button
           @click="showConfirmModal = true"
           class="absolute top-2 right-2 flex items-center space-x-1 text-gray-700 hover:text-gray-900"
         >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
           <span>Back</span>
         </button>
 
-        <div class="p-6 pt-12">
-          <!-- Screenshot Instruction Text -->
-          <!-- <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">
-            Take a screenshot and share with your friends
-          </h2> -->
-          <!-- Playlist Songs -->
-          <div class="space-y-4">
-            <div v-for="(song, index) in playlist" :key="index" class="flex items-start">
+        <!-- Modal Content with Scrollable Playlist -->
+        <div class="p-6 pt-12 flex flex-col flex-grow overflow-y-auto">
+          <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">Generated Playlist for {{ genre }}</h2>
+
+          <div class="space-y-4 flex flex-col items-start">
+            <div v-for="(song, index) in playlist" :key="index" class="flex items-start w-full">
               <div class="text-xl font-bold text-gray-800 mr-4">{{ index + 1 }}.</div>
-              <div>
+              <div class="flex flex-col">
                 <h3 class="text-lg font-semibold text-gray-800">{{ song.title }}</h3>
                 <p class="text-gray-500">{{ song.artist }}</p>
               </div>
@@ -122,7 +122,7 @@
       <div class="absolute inset-0 bg-black bg-opacity-50" @click="showConfirmModal = false"></div>
       <div class="relative bg-white rounded-lg p-6 max-w-sm mx-auto">
         <h3 class="text-lg font-medium text-gray-900 mb-4">
-          Are you sure you want to  exit? You will lose your playlist suggestions if you don't take a screenshot.
+          Are you sure you want to exit? You will lose your playlist suggestions if you don't take a screenshot.
         </h3>
         <div class="flex justify-end space-x-4 mt-6">
           <button
